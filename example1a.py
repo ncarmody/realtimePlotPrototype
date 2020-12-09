@@ -1,3 +1,4 @@
+ -*- coding: utf-8 -*-
 import dash_devices
 from dash_devices.dependencies import Input, Output
 import dash_html_components as html
