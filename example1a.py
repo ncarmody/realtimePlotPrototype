@@ -11,7 +11,7 @@ from plotly.tools import mpl_to_plotly
 from threading import Timer, Thread
 time.strftime('%X %x %Z')
 # os.environ['TZ'] = 'Geneva,Switzerland'
-
+import plotly.io as pio
 from plotly.matplotlylib import mplexporter, PlotlyRenderer
 import plotly.graph_objs as go
 from plotly.offline import plot
@@ -23,10 +23,29 @@ import matplotlib as mpl
 import json
 import numpy as np
 # from example2a import returnRequest
-external_stylesheets = ["https://codepen.io/chriddyp/pen/bWLwgP.css"]
+# external_stylesheets = ["https://codepen.io/chriddyp/pen/bWLwgP.css"]
+external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
+
 import websocket
 mpl.use('Agg')
 
+
+import plotly.graph_objects as go
+import plotly.io as pio
+
+plotly_template = pio.templates["plotly_dark"]
+print (plotly_template)
+colors = {
+    'background': '#111111',
+    'text': '#7FDBFF'
+}
+# pio.templates["plotly_dark_custom"] = pio.templates["plotly_dark"]
+
+# pio.templates["plotly_dark_custom"].update({
+#                                         #e.g. you want to change the background to transparent
+#                                         'paper_bgcolor': 'rgba(0,0,0,0)',
+#                                         'plot_bgcolor': 'rgba(0,0,0,0)'
+#                                         })
 
 # class returnRequest():
 #     # def updatePlot(self):
@@ -104,7 +123,7 @@ def encondeFunction(hexArray):
     return [c, list(c.keys())]
 
 
-app = dash_devices.Dash(__name__, external_stylesheets=external_stylesheets)
+app = dash_devices.Dash(__name__,external_stylesheets=external_stylesheets)
 app.config.suppress_callback_exceptions = True
 
 websocket.enableTrace(True)
@@ -244,7 +263,7 @@ def on_message(ws, message):
         fig['layout']['yaxis2']['range']=[np.min(df['humidity'])-diff,np.max(df['humidity'])+diff]
         diff = (np.max(df['distance'])-np.max(df['distance']))*windowMarg
         fig['layout']['yaxis']['range']=[np.min(df['distance'])-diff,np.max(df['distance'])+diff]
-        
+        fig.update_layout(template='plotly_dark')
         fig.update_xaxes(type = 'date')
         # fig.add_trace(go.Scatter(y=df.distance,x=df.index,, mode="lines"), row=1, col=1)
         # fig.add_trace(go.Bar(y=df.humidity), row=2, col=1)
@@ -257,7 +276,7 @@ def on_message(ws, message):
 
         
 
-
+        # pio.template['plotly_dark']
         app.push_mods({
             'temp_graph': {'figure': fig}
         })
@@ -282,21 +301,21 @@ def on_close(ws):
     print("### closed ###")
 def on_open(ws):
     print("opened the websocket")
-
+html.Div()
 
 
 app.layout = html.Div([
 
     html.Div([
             html.Div(dcc.Markdown("__general information about the project__")),
-            dcc.Input(id="shared_input_no_output", type="text", value='')],style={'width' : '150%', 'marginLeft': 130 , 'marginTop' : 140 ,'minWidth' : 1000  }),
+            dcc.Input(id="shared_input_no_output", type="text", value='')],style={'width' : '150%', 'marginLeft': 130 , 'marginTop' : 140 ,'minWidth' : 1000 ,  'template': 'plotly_dark' }),
      html.Div([       
            dcc.Input(
                     id = 'size',
                     type='text',
                     value='',
-                    style={'width':'100%'}
-            )],style={'marginLeft': 130 , 'marginTop' : 20 ,'minWidth' : 1000  }
+                    style={'width':'100%', 'template': 'plotly_dark'}
+            )],style={'marginLeft': 130 , 'marginTop' : 20 ,'minWidth' : 1000,  'template': 'plotly_dark' }
             ),   
     html.Div(id='temp'),
     dcc.Graph(id='temp_graph',animate=True), 
@@ -321,7 +340,7 @@ app.layout = html.Div([
     # html.Div("Regular input"),
     # dcc.Input(id="regular_input", type="text", value=''), 
     # html.Div(id='regular_input_output'),
-])
+], style={'backgroundColor': colors['background'], 'color': colors['text'], 'height':'100vh', 'width':'100%', 'height':'100%', 'top':'0px', 'left':'0px'})
 
 
 # @app.callback_shared(None, [Input('shared_slider_no_output', 'value')])
