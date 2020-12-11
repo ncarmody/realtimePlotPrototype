@@ -145,6 +145,9 @@ try:
     df['year'] = pd.to_datetime(df['year'], infer_datetime_format=True)
     df['month'] = pd.to_datetime(df['month'], infer_datetime_format=True)
     df['day'] = pd.to_datetime(df['day'], infer_datetime_format=True)
+    print("das ist df.head")
+    print(df.head(2))
+    print("das ist df.tail")
 
     # traces =go.Figure(data = go.Scatter(x=df.index,  y = df.distance, name='distance'),layout=go.Layout(title='distance vs. time' , yaxis_title ='distance 1/[mm]'))
     traces =go.Scatter(x=df.date,  y = df.distance, name='distance')
@@ -187,6 +190,10 @@ try:
     # fig.update_yaxes(range=)
 
     dcc.Graph(id='temp_graph', figure=fig)
+    print(df.tail(2))
+    if df.shape[0]>500:
+        df = df.tail(500)
+    df.to_csv('dataRecordings.csv', index=False)
 except Exception as e:
     print(e)
     pass
@@ -218,9 +225,13 @@ def on_message(ws, message):
         df['month'] = pd.to_datetime(df['month'], infer_datetime_format=True)
         df['day'] = pd.to_datetime(df['day'], infer_datetime_format=True)
         print('bis hier alles ok 8\n\n\n')
+        
     except:
         df = pd.DataFrame(message, columns=keyList, index = [0])
         print('bis hier alles ok 9.5\n\n\n')
+
+
+
         # print(df)
     try:
         # print('bis hier alles ok 10\n\n\n')
@@ -285,6 +296,13 @@ def on_message(ws, message):
 
         # plt.close()
         print("in try and push figure")
+        print("this is the range: "+ str(min(df.shape[0],500)))
+        print("das ist df.head")
+        print(df.head(2))
+        print("das ist df.tail")
+        print(df.tail(2))
+        if df.shape[0]>500:
+            df = df.tail(500)
         df.to_csv('dataRecordings.csv', index=False)
 
             
