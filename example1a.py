@@ -225,8 +225,7 @@ except Exception as e:
 
 def on_message(ws, message):
 
-	message = json.loads(message)
-
+	message = json.loads(message.decode("utf-8"))
 	print('bis hier alles ok 5\n\n\n')
 	print(message)
 	print('bis hier alles ok 5\n\n\n')
