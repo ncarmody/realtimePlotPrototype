@@ -113,6 +113,8 @@ colors = {
 #         return [dataDict, list(dataDict.keys())]
 def encondeFunction(hexArray):
 	c = {}
+	print('hexarray ist: ')
+	print(hexArray)
 	b = bytearray.fromhex(hexArray)
 	print(b)
 	[c['distance'],c['battery'],c['voltage']] = struct.unpack('3f', b)
@@ -232,124 +234,129 @@ def on_message(ws, message):
 	print('bis hier alles ok 5\n\n\n')
 	print(message)
 	print('bis hier alles ok 5\n\n\n')
-	message = message['data']
-	# [message, keyList] = rr.PayloadDecoder(message['data'])
-	# [message, keyList] = encondeFunction(message)
-	message, keyList = encondeFunction(message)
-	print(message)
-	print('bis hier alles ok 6\n\n\n')
-	try:
-		df = pd.read_csv('dataRecordings.csv')
-		print('bis hier alles ok 7\n\n\n')
-		print(df)
-		df = df.append(pd.DataFrame(message, columns=keyList, index=[0]), ignore_index=True )
-		df['time'] = pd.to_datetime(df['time'], infer_datetime_format=True)
-		df['year'] = pd.to_datetime(df['year'], infer_datetime_format=True)
-		df['month'] = pd.to_datetime(df['month'], infer_datetime_format=True)
-		df['day'] = pd.to_datetime(df['day'], infer_datetime_format=True)
-		print('bis hier alles ok 8\n\n\n')
-		
-	except:
-		df = pd.DataFrame(message, columns=keyList, index = [0])
-		print('bis hier alles ok 9.5\n\n\n')
 
-
-
-		# print(df)
-	try:
-		# print('bis hier alles ok 10\n\n\n')
-		# f, (a1, a2, a3) = plt.subplots(3, sharex=True, figsize=(14,round(18*0.8)))
-		# # f, (a1, a2, a3) = plt.subplots(3, sharex=True)
-		# a1 = df.set_index('time')[['distance']].plot(title='Distance',ax= a1, xlabel='time', grid=True, ylabel='Distance')
-		# a2 = df.set_index('time')[['humidity']].plot(title='Temperature & Humidity' , ax= a2, xlabel='time', grid=True, ylabel='Humidity')
-		# a3 = df.set_index('time')[['temperature']].plot(ax= a3, xlabel='time', grid=True, ylabel='Temperature')
-		# print('bis hier alles ok 11\n\n\n')
-		# # # traces =go.Scatter(x=df['time']  y = df['distance'], name='FirstPlot',layout=dict(xaxis=dict(title='Measured distance vs. time' )), yaxis = dict(title='distance 1/[mm]'))
-
-
-		# f.tight_layout()
-		# print('bis hier alles ok 12\n\n\n')
-		# figure = plotly_plot_data(f)
-		fig = make_subplots(rows=3, cols=1)
-
-		traces =go.Scatter(x=df.time,  y = df.distance, name='distance')
-		fig.add_trace(traces, row=1, col=1)
-		# traces =go.Scatter(x=df.time,  y = df.voltage, name='humidity')
-		# fig.add_trace(traces, row=2, col=1)
-		traces =go.Scatter(x=df.time,  y = df.voltage, name='voltage')
-		fig.add_trace(traces, row=2, col=1)
-		traces =go.Scatter(x=df.time,  y = df.battery, name='battery')
-		fig.add_trace(traces, row=3, col=1)
-		# traces =go.Scatter(x=df.time,  y = df.battery, name='battery')
-		# fig.add_trace(traces, row=4, col=1)
-		# fig['layout']['xaxis']['title']='distance 1/[mm]'
-		# fig['layout']['xaxis2']['title']='humidity [pct]'
-		fig['layout']['xaxis3']['title']='time'
-		fig['layout']['yaxis']['title']='distance 1/[mm]'
-		# fig['layout']['yaxis2']['title']='humidity [pct]'
-		fig['layout']['yaxis2']['title']='voltage 1/[V]'
-		# fig['layout']['yaxis3']['title']='temperature 1/[°C]'
-		fig['layout']['yaxis3']['title']='battery [pct]'
-
-
-		fig['layout']['title']='Prototype Measurements'
-		fig['layout']['height'] = 1800
-		# fig.update_xaxes(type='date')
-
-		# fig.update_yaxes(autorange = True)
-		windowMarg = 1
-		print([df['time'].min(),df['time'].max()])
-		fig['layout']['xaxis3']['range']=[df['time'].min(),df['time'].max()]
-
-		diff = (np.max(df['battery'])-np.max(df['battery']))*windowMarg
-		fig['layout']['yaxis3']['range']=[np.min(df['battery'])-diff,np.max(df['battery'])+diff]
-
-		# diff = (np.max(df['temperature'])-np.max(df['temperature']))*windowMarg
-		# fig['layout']['yaxis3']['range']=[np.min(df['temperature'])-diff,np.max(df['temperature'])+diff]
-		
-		diff = (np.max(df['voltage'])-np.max(df['voltage']))*windowMarg
-		fig['layout']['yaxis2']['range']=[np.min(df['voltage'])-diff,np.max(df['voltage'])+diff]
-
-		# diff = (np.max(df['humidity'])-np.max(df['humidity']))*windowMarg
-		# fig['layout']['yaxis2']['range']=[np.min(df['humidity'])-diff,np.max(df['humidity'])+diff]
-		
-		diff = (np.max(df['distance'])-np.max(df['distance']))*windowMarg
-		fig['layout']['yaxis']['range']=[np.min(df['distance'])-diff,np.max(df['distance'])+diff]
-		
-		fig.update_xaxes(type = 'date')
-		
-		# fig.add_trace(go.Scatter(y=df.distance,x=df.index,, mode="lines"), row=1, col=1)
-		# fig.add_trace(go.Bar(y=df.battery), row=2, col=1)
-
-
-		# f.tight_layout()
-		# figure = plotly_plot_data(f)
-		# figure.update_xaxes(type = 'date')
-		# fig.update_layout(xaxis= {'autorange': True }, yaxis= {'autorange': True})
-		# fig.update_yaxes(range=)
-
-
-		# pio.template['plotly_dark']
-		app.push_mods({
-			'temp_graph': {'figure': fig}
-		})
-
-
-		# plt.close()
-		print("in try and push figure")
-		print("this is the range: "+ str(min(df.shape[0],500)))
-		print("das ist df.head")
-		print(df.head(2))
-		print("das ist df.tail")
-		print(df.tail(2))
-		if df.shape[0]>500:
-			df = df.tail(500)
-		df.to_csv('dataRecordings.csv', index=False)
-
+	if 'data' in message.keys(): 
+		message = message['data']
+		# [message, keyList] = rr.PayloadDecoder(message['data'])
+		# [message, keyList] = encondeFunction(message)
+		message, keyList = encondeFunction(message)
+		print(message)
+		print('bis hier alles ok 6\n\n\n')
+		try:
+			df = pd.read_csv('dataRecordings.csv')
+			print('bis hier alles ok 7\n\n\n')
+			print(df)
+			df = df.append(pd.DataFrame(message, columns=keyList, index=[0]), ignore_index=True )
+			df['time'] = pd.to_datetime(df['time'], infer_datetime_format=True)
+			df['year'] = pd.to_datetime(df['year'], infer_datetime_format=True)
+			df['month'] = pd.to_datetime(df['month'], infer_datetime_format=True)
+			df['day'] = pd.to_datetime(df['day'], infer_datetime_format=True)
+			print('bis hier alles ok 8\n\n\n')
 			
-	except Exception as e:
-		print('hier nicht ok weil: e')
-		print(e)
+		except:
+			df = pd.DataFrame(message, columns=keyList, index = [0])
+			print('bis hier alles ok 9.5\n\n\n')
+
+
+
+			# print(df)
+		try:
+			# print('bis hier alles ok 10\n\n\n')
+			# f, (a1, a2, a3) = plt.subplots(3, sharex=True, figsize=(14,round(18*0.8)))
+			# # f, (a1, a2, a3) = plt.subplots(3, sharex=True)
+			# a1 = df.set_index('time')[['distance']].plot(title='Distance',ax= a1, xlabel='time', grid=True, ylabel='Distance')
+			# a2 = df.set_index('time')[['humidity']].plot(title='Temperature & Humidity' , ax= a2, xlabel='time', grid=True, ylabel='Humidity')
+			# a3 = df.set_index('time')[['temperature']].plot(ax= a3, xlabel='time', grid=True, ylabel='Temperature')
+			# print('bis hier alles ok 11\n\n\n')
+			# # # traces =go.Scatter(x=df['time']  y = df['distance'], name='FirstPlot',layout=dict(xaxis=dict(title='Measured distance vs. time' )), yaxis = dict(title='distance 1/[mm]'))
+
+
+			# f.tight_layout()
+			# print('bis hier alles ok 12\n\n\n')
+			# figure = plotly_plot_data(f)
+			fig = make_subplots(rows=3, cols=1)
+
+			traces =go.Scatter(x=df.time,  y = df.distance, name='distance')
+			fig.add_trace(traces, row=1, col=1)
+			# traces =go.Scatter(x=df.time,  y = df.voltage, name='humidity')
+			# fig.add_trace(traces, row=2, col=1)
+			traces =go.Scatter(x=df.time,  y = df.voltage, name='voltage')
+			fig.add_trace(traces, row=2, col=1)
+			traces =go.Scatter(x=df.time,  y = df.battery, name='battery')
+			fig.add_trace(traces, row=3, col=1)
+			# traces =go.Scatter(x=df.time,  y = df.battery, name='battery')
+			# fig.add_trace(traces, row=4, col=1)
+			# fig['layout']['xaxis']['title']='distance 1/[mm]'
+			# fig['layout']['xaxis2']['title']='humidity [pct]'
+			fig['layout']['xaxis3']['title']='time'
+			fig['layout']['yaxis']['title']='distance 1/[mm]'
+			# fig['layout']['yaxis2']['title']='humidity [pct]'
+			fig['layout']['yaxis2']['title']='voltage 1/[V]'
+			# fig['layout']['yaxis3']['title']='temperature 1/[°C]'
+			fig['layout']['yaxis3']['title']='battery [pct]'
+
+
+			fig['layout']['title']='Prototype Measurements'
+			fig['layout']['height'] = 1800
+			# fig.update_xaxes(type='date')
+
+			# fig.update_yaxes(autorange = True)
+			windowMarg = 1
+			print([df['time'].min(),df['time'].max()])
+			fig['layout']['xaxis3']['range']=[df['time'].min(),df['time'].max()]
+
+			diff = (np.max(df['battery'])-np.max(df['battery']))*windowMarg
+			fig['layout']['yaxis3']['range']=[np.min(df['battery'])-diff,np.max(df['battery'])+diff]
+
+			# diff = (np.max(df['temperature'])-np.max(df['temperature']))*windowMarg
+			# fig['layout']['yaxis3']['range']=[np.min(df['temperature'])-diff,np.max(df['temperature'])+diff]
+			
+			diff = (np.max(df['voltage'])-np.max(df['voltage']))*windowMarg
+			fig['layout']['yaxis2']['range']=[np.min(df['voltage'])-diff,np.max(df['voltage'])+diff]
+
+			# diff = (np.max(df['humidity'])-np.max(df['humidity']))*windowMarg
+			# fig['layout']['yaxis2']['range']=[np.min(df['humidity'])-diff,np.max(df['humidity'])+diff]
+			
+			diff = (np.max(df['distance'])-np.max(df['distance']))*windowMarg
+			fig['layout']['yaxis']['range']=[np.min(df['distance'])-diff,np.max(df['distance'])+diff]
+			
+			fig.update_xaxes(type = 'date')
+			
+			# fig.add_trace(go.Scatter(y=df.distance,x=df.index,, mode="lines"), row=1, col=1)
+			# fig.add_trace(go.Bar(y=df.battery), row=2, col=1)
+
+
+			# f.tight_layout()
+			# figure = plotly_plot_data(f)
+			# figure.update_xaxes(type = 'date')
+			# fig.update_layout(xaxis= {'autorange': True }, yaxis= {'autorange': True})
+			# fig.update_yaxes(range=)
+
+
+			# pio.template['plotly_dark']
+			app.push_mods({
+				'temp_graph': {'figure': fig}
+			})
+
+
+			# plt.close()
+			print("in try and push figure")
+			print("this is the range: "+ str(min(df.shape[0],500)))
+			print("das ist df.head")
+			print(df.head(2))
+			print("das ist df.tail")
+			print(df.tail(2))
+			if df.shape[0]>500:
+				df = df.tail(500)
+			df.to_csv('dataRecordings.csv', index=False)
+
+				
+		except Exception as e:
+			print('hier nicht ok weil: e')
+			print(e)
+	print('keine reaktion da message ist: ')
+	print(message)
+	print('\n'*10)
 
 
 
