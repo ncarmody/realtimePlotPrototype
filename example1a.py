@@ -134,6 +134,7 @@ app.config.suppress_callback_exceptions = True
 websocket.enableTrace(True)
 
 # rr = returnRequest()
+# def startSetup():
 
 try:
 	df = pd.read_csv('dataRecordings.csv')
@@ -215,6 +216,7 @@ try:
 	if df.shape[0]>500:
 		df = df.tail(500)
 	df.to_csv('dataRecordings.csv', index=False)
+
 except Exception as e:
 	print(e)
 	pass
@@ -376,7 +378,7 @@ app.layout = html.Div([
 			)],style={'marginLeft': 130 , 'marginTop' : 20 ,'minWidth' : 1000,  'template': 'plotly_dark' }
 			),   
 	html.Div(id='temp'),
-	dcc.Graph(id='temp_graph',animate=True), 
+	dcc.Graph(id='temp_graph',animate=True, figure=fig),
 	html.Div('Server rebooting'),
 
 	# html.Div("Shared slider no output"),
@@ -438,7 +440,9 @@ ws = websocket.WebSocketApp("wss://eu1.loriot.io/app?token=vnoi7QAAAA1ldTEubG9ya
 # @app.push_mods_coro
 
 if __name__ == '__main__':
-
+	# startSetup()
+	print(fig)
+	print('\n\n\n')
 	tws = Thread(target=ws.run_forever)
 	tws.daemon = True
 	tws.start()
