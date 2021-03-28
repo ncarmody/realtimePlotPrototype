@@ -1,0 +1,564 @@
+layout.Template({
+    'data': {'bar': [{'error_x': {'color': '#f2f5fa'},
+                      'error_y': {'color': '#f2f5fa'},
+                      'marker': {'line': {'color': 'rgb(17,17,17)', 'width': 0.5}},
+                      'type': 'bar'}],
+             'barpolar': [{'marker': {'line': {'color': 'rgb(17,17,17)', 'width': 0.5}}, 'type': 'barpolar'}],
+             'carpet': [{'aaxis': {'endlinecolor': '#A2B1C6',
+                                   'gridcolor': '#506784',
+                                   'linecolor': '#506784',
+                                   'minorgridcolor': '#506784',
+                                   'startlinecolor': '#A2B1C6'},
+                         'baxis': {'endlinecolor': '#A2B1C6',
+                                   'gridcolor': '#506784',
+                                   'linecolor': '#506784',
+                                   'minorgridcolor': '#506784',
+                                   'startlinecolor': '#A2B1C6'},
+                         'type': 'carpet'}],
+             'choropleth': [{'colorbar': {'outlinewidth': 0, 'ticks': ''}, 'type': 'choropleth'}],
+             'contour': [{'colorbar': {'outlinewidth': 0, 'ticks': ''},
+                          'colorscale': [[0.0, '#0d0887'], [0.1111111111111111,
+                                         '#46039f'], [0.2222222222222222,
+                                         '#7201a8'], [0.3333333333333333,
+                                         '#9c179e'], [0.4444444444444444,
+                                         '#bd3786'], [0.5555555555555556,
+                                         '#d8576b'], [0.6666666666666666,
+                                         '#ed7953'], [0.7777777777777778,
+                                         '#fb9f3a'], [0.8888888888888888,
+                                         '#fdca26'], [1.0, '#f0f921']],
+                          'type': 'contour'}],
+             'contourcarpet': [{'colorbar': {'outlinewidth': 0, 'ticks': ''}, 'type': 'contourcarpet'}],
+             'heatmap': [{'colorbar': {'outlinewidth': 0, 'ticks': ''},
+                          'colorscale': [[0.0, '#0d0887'], [0.1111111111111111,
+                                         '#46039f'], [0.2222222222222222,
+                                         '#7201a8'], [0.3333333333333333,
+                                         '#9c179e'], [0.4444444444444444,
+                                         '#bd3786'], [0.5555555555555556,
+                                         '#d8576b'], [0.6666666666666666,
+                                         '#ed7953'], [0.7777777777777778,
+                                         '#fb9f3a'], [0.8888888888888888,
+                                         '#fdca26'], [1.0, '#f0f921']],
+                          'type': 'heatmap'}],
+             'heatmapgl': [{'colorbar': {'outlinewidth': 0, 'ticks': ''},
+                            'colorscale': [[0.0, '#0d0887'], [0.1111111111111111,
+                                           '#46039f'], [0.2222222222222222,
+                                           '#7201a8'], [0.3333333333333333,
+                                           '#9c179e'], [0.4444444444444444,
+                                           '#bd3786'], [0.5555555555555556,
+                                           '#d8576b'], [0.6666666666666666,
+                                           '#ed7953'], [0.7777777777777778,
+                                           '#fb9f3a'], [0.8888888888888888,
+                                           '#fdca26'], [1.0, '#f0f921']],
+                            'type': 'heatmapgl'}],
+             'histogram': [{'marker': {'colorbar': {'outlinewidth': 0, 'ticks': ''}}, 'type': 'histogram'}],
+             'histogram2d': [{'colorbar': {'outlinewidth': 0, 'ticks': ''},
+                              'colorscale': [[0.0, '#0d0887'],
+                                             [0.1111111111111111, '#46039f'],
+                                             [0.2222222222222222, '#7201a8'],
+                                             [0.3333333333333333, '#9c179e'],
+                                             [0.4444444444444444, '#bd3786'],
+                                             [0.5555555555555556, '#d8576b'],
+                                             [0.6666666666666666, '#ed7953'],
+                                             [0.7777777777777778, '#fb9f3a'],
+                                             [0.8888888888888888, '#fdca26'], [1.0,
+                                             '#f0f921']],
+                              'type': 'histogram2d'}],
+             'histogram2dcontour': [{'colorbar': {'outlinewidth': 0, 'ticks': ''},
+                                     'colorscale': [[0.0, '#0d0887'],
+                                                    [0.1111111111111111,
+                                                    '#46039f'],
+                                                    [0.2222222222222222,
+                                                    '#7201a8'],
+                                                    [0.3333333333333333,
+                                                    '#9c179e'],
+                                                    [0.4444444444444444,
+                                                    '#bd3786'],
+                                                    [0.5555555555555556,
+                                                    '#d8576b'],
+                                                    [0.6666666666666666,
+                                                    '#ed7953'],
+                                                    [0.7777777777777778,
+                                                    '#fb9f3a'],
+                                                    [0.8888888888888888,
+                                                    '#fdca26'], [1.0, '#f0f921']],
+                                     'type': 'histogram2dcontour'}],
+             'mesh3d': [{'colorbar': {'outlinewidth': 0, 'ticks': ''}, 'type': 'mesh3d'}],
+             'parcoords': [{'line': {'colorbar': {'outlinewidth': 0, 'ticks': ''}}, 'type': 'parcoords'}],
+             'pie': [{'automargin': True, 'type': 'pie'}],
+             'scatter': [{'marker': {'line': {'color': '#283442'}}, 'type': 'scatter'}],
+             'scatter3d': [{'line': {'colorbar': {'outlinewidth': 0, 'ticks': ''}},
+                            'marker': {'colorbar': {'outlinewidth': 0, 'ticks': ''}},
+                            'type': 'scatter3d'}],
+             'scattercarpet': [{'marker': {'colorbar': {'outlinewidth': 0, 'ticks': ''}}, 'type': 'scattercarpet'}],
+             'scattergeo': [{'marker': {'colorbar': {'outlinewidth': 0, 'ticks': ''}}, 'type': 'scattergeo'}],
+             'scattergl': [{'marker': {'line': {'color': '#283442'}}, 'type': 'scattergl'}],
+             'scattermapbox': [{'marker': {'colorbar': {'outlinewidth': 0, 'ticks': ''}}, 'type': 'scattermapbox'}],
+             'scatterpolar': [{'marker': {'colorbar': {'outlinewidth': 0, 'ticks': ''}}, 'type': 'scatterpolar'}],
+             'scatterpolargl': [{'marker': {'colorbar': {'outlinewidth': 0, 'ticks': ''}}, 'type': 'scatterpolargl'}],
+             'scatterternary': [{'marker': {'colorbar': {'outlinewidth': 0, 'ticks': ''}}, 'type': 'scatterternary'}],
+             'surface': [{'colorbar': {'outlinewidth': 0, 'ticks': ''},
+                          'colorscale': [[0.0, '#0d0887'], [0.1111111111111111,
+                                         '#46039f'], [0.2222222222222222,
+                                         '#7201a8'], [0.3333333333333333,
+                                         '#9c179e'], [0.4444444444444444,
+                                         '#bd3786'], [0.5555555555555556,
+                                         '#d8576b'], [0.6666666666666666,
+                                         '#ed7953'], [0.7777777777777778,
+                                         '#fb9f3a'], [0.8888888888888888,
+                                         '#fdca26'], [1.0, '#f0f921']],
+                          'type': 'surface'}],
+             'table': [{'cells': {'fill': {'color': '#506784'}, 'line': {'color': 'rgb(17,17,17)'}},
+                        'header': {'fill': {'color': '#2a3f5f'}, 'line': {'color': 'rgb(17,17,17)'}},
+                        'type': 'table'}]},
+    'layout': {'annotationdefaults': {'arrowcolor': '#f2f5fa', 'arrowhead': 0, 'arrowwidth': 1},
+               'coloraxis': {'colorbar': {'outlinewidth': 0, 'ticks': ''}},
+               'colorscale': {'diverging': [[0, '#8e0152'], [0.1, '#c51b7d'],
+                                            [0.2, '#de77ae'], [0.3, '#f1b6da'],
+                                            [0.4, '#fde0ef'], [0.5, '#f7f7f7'],
+                                            [0.6, '#e6f5d0'], [0.7, '#b8e186'],
+                                            [0.8, '#7fbc41'], [0.9, '#4d9221'], [1,
+                                            '#276419']],
+                              'sequential': [[0.0, '#0d0887'],
+                                             [0.1111111111111111, '#46039f'],
+                                             [0.2222222222222222, '#7201a8'],
+                                             [0.3333333333333333, '#9c179e'],
+                                             [0.4444444444444444, '#bd3786'],
+                                             [0.5555555555555556, '#d8576b'],
+                                             [0.6666666666666666, '#ed7953'],
+                                             [0.7777777777777778, '#fb9f3a'],
+                                             [0.8888888888888888, '#fdca26'], [1.0,
+                                             '#f0f921']],
+                              'sequentialminus': [[0.0, '#0d0887'],
+                                                  [0.1111111111111111, '#46039f'],
+                                                  [0.2222222222222222, '#7201a8'],
+                                                  [0.3333333333333333, '#9c179e'],
+                                                  [0.4444444444444444, '#bd3786'],
+                                                  [0.5555555555555556, '#d8576b'],
+                                                  [0.6666666666666666, '#ed7953'],
+                                                  [0.7777777777777778, '#fb9f3a'],
+                                                  [0.8888888888888888, '#fdca26'],
+                                                  [1.0, '#f0f921']]},
+               'colorway': [#636efa, #EF553B, #00cc96, #ab63fa, #FFA15A, #19d3f3,
+                            #FF6692, #B6E880, #FF97FF, #FECB52],
+               'font': {'color': '#f2f5fa'},
+               'geo': {'bgcolor': 'rgb(17,17,17)',
+                       'lakecolor': 'rgb(17,17,17)',
+                       'landcolor': 'rgb(17,17,17)',
+                       'showlakes': True,
+                       'showland': True,
+                       'subunitcolor': '#506784'},
+               'hoverlabel': {'align': 'left'},
+               'hovermode': 'closest',
+               'mapbox': {'style': 'dark'},
+               'paper_bgcolor': 'rgb(17,17,17)',
+               'plot_bgcolor': 'rgb(17,17,17)',
+               'polar': {'angularaxis': {'gridcolor': '#506784', 'linecolor': '#506784', 'ticks': ''},
+                         'bgcolor': 'rgb(17,17,17)',
+                         'radialaxis': {'gridcolor': '#506784', 'linecolor': '#506784', 'ticks': ''}},
+               'scene': {'xaxis': {'backgroundcolor': 'rgb(17,17,17)',
+                                   'gridcolor': '#506784',
+                                   'gridwidth': 2,
+                                   'linecolor': '#506784',
+                                   'showbackground': True,
+                                   'ticks': '',
+                                   'zerolinecolor': '#C8D4E3'},
+                         'yaxis': {'backgroundcolor': 'rgb(17,17,17)',
+                                   'gridcolor': '#506784',
+                                   'gridwidth': 2,
+                                   'linecolor': '#506784',
+                                   'showbackground': True,
+                                   'ticks': '',
+                                   'zerolinecolor': '#C8D4E3'},
+                         'zaxis': {'backgroundcolor': 'rgb(17,17,17)',
+                                   'gridcolor': '#506784',
+                                   'gridwidth': 2,
+                                   'linecolor': '#506784',
+                                   'showbackground': True,
+                                   'ticks': '',
+                                   'zerolinecolor': '#C8D4E3'}},
+               'shapedefaults': {'line': {'color': '#f2f5fa'}},
+               'sliderdefaults': {'bgcolor': '#C8D4E3', 'bordercolor': 'rgb(17,17,17)', 'borderwidth': 1, 'tickwidth': 0},
+               'ternary': {'aaxis': {'gridcolor': '#506784', 'linecolor': '#506784', 'ticks': ''},
+                           'baxis': {'gridcolor': '#506784', 'linecolor': '#506784', 'ticks': ''},
+                           'bgcolor': 'rgb(17,17,17)',
+                           'caxis': {'gridcolor': '#506784', 'linecolor': '#506784', 'ticks': ''}},
+               'title': {'x': 0.05},
+               'updatemenudefaults': {'bgcolor': '#506784', 'borderwidth': 0},
+               'xaxis': {'automargin': True,
+                         'gridcolor': '#283442',
+                         'linecolor': '#506784',
+                         'ticks': '',
+                         'title': {'standoff': 15},
+                         'zerolinecolor': '#283442',
+                         'zerolinewidth': 2},
+               'yaxis': {'automargin': True,
+                         'gridcolor': '#283442',
+                         'linecolor': '#506784',
+                         'ticks': '',
+                         'title': {'standoff': 15},
+                         'zerolinecolor': '#283442',
+                         'zerolinewidth': 2}}
+})
+das ist df.head
+    distance  ...                           day
+0  492.59845  ... 1970-01-01 00:00:00.000000005
+1  492.59845  ... 1970-01-01 00:00:00.000000005
+
+[2 rows x 7 columns]
+das ist df.tail
+[Timestamp('2021-05-02 12:32:17'), Timestamp('2021-07-02 15:00:45')]
+        distance  ...                           day
+498  3367.597168  ... 1970-01-01 00:00:00.000000007
+499  3367.597168  ... 1970-01-01 00:00:00.000000007
+
+[2 rows x 7 columns]
+Figure({
+    'data': [{'name': 'distance',
+              'type': 'scatter',
+              'x': array(['12:32:17 05/02/21 ', '12:32:22 05/02/21 ', '12:48:16 05/02/21 ', ...,
+                          '14:44:45 07/02/21 ', '15:00:39 07/02/21 ', '15:00:45 07/02/21 '],
+                         dtype=object),
+              'xaxis': 'x',
+              'y': array([ 492.59844971,  492.59844971, 3367.59716797, ..., 3367.59716797,
+                          3367.59716797, 3367.59716797]),
+              'yaxis': 'y'},
+             {'name': 'voltage',
+              'type': 'scatter',
+              'x': array(['12:32:17 05/02/21 ', '12:32:22 05/02/21 ', '12:48:16 05/02/21 ', ...,
+                          '14:44:45 07/02/21 ', '15:00:39 07/02/21 ', '15:00:45 07/02/21 '],
+                         dtype=object),
+              'xaxis': 'x2',
+              'y': array([4.01999998, 4.01999998, 4.01999998, ..., 3.96799994, 3.97300005,
+                          3.97300005]),
+              'yaxis': 'y2'},
+             {'name': 'battery',
+              'type': 'scatter',
+              'x': array(['12:32:17 05/02/21 ', '12:32:22 05/02/21 ', '12:48:16 05/02/21 ', ...,
+                          '14:44:45 07/02/21 ', '15:00:39 07/02/21 ', '15:00:45 07/02/21 '],
+                         dtype=object),
+              'xaxis': 'x3',
+              'y': array([0.85799998, 0.85799998, 0.85699999, ..., 0.77499998, 0.78100002,
+                          0.78100002]),
+              'yaxis': 'y3'}],
+    'layout': {'height': 1800,
+               'template': '...',
+               'title': {'text': 'Prototype Measurements'},
+               'xaxis': {'anchor': 'y', 'domain': [0.0, 1.0]},
+               'xaxis2': {'anchor': 'y2', 'domain': [0.0, 1.0]},
+               'xaxis3': {'anchor': 'y3',
+                          'domain': [0.0, 1.0],
+                          'range': [2021-05-02 12:32:17, 2021-07-02 15:00:45],
+                          'title': {'text': 'time'}},
+               'yaxis': {'anchor': 'x',
+                         'domain': [0.7333333333333333, 1.0],
+                         'range': [276.31564331054693, 3367.59716796875],
+                         'title': {'text': 'distance 1/[mm]'}},
+               'yaxis2': {'anchor': 'x2',
+                          'domain': [0.36666666666666664, 0.6333333333333333],
+                          'range': [3.9670000076293945, 4.0229997634887695],
+                          'title': {'text': 'voltage 1/[V]'}},
+               'yaxis3': {'anchor': 'x3',
+                          'domain': [0.0, 0.26666666666666666],
+                          'range': [0.7730000019073486, 0.8600000143051147],
+                          'title': {'text': 'battery [pct]'}}}
+})
+
+
+
+
+run server
+Running on http://0.0.0.0:8765/
+Debugger PIN: 595-020-358
+Running on http://0.0.0.0:8765 (CTRL + C to quit)
+Executing <Task pending coro=<observe_changes() running at C:\Users\nicol\Desktop\python\dashDevices\dash_devices\env\lib\site-packages\hypercorn\utils.py:118> wait_for=<Future pending cb=[<TaskWakeupMethWrapper object at 0x0000021E43860CA8>()] created at C:\Users\nicol\AppData\Local\Programs\Python\Python37\lib\asyncio\base_events.py:395> created at C:\Users\nicol\Desktop\python\dashDevices\dash_devices\env\lib\site-packages\hypercorn\asyncio\run.py:95> took 0.125 seconds
+[2021-03-23 18:41:01,365] Running on http://0.0.0.0:8765 (CTRL + C to quit)
+--- request header ---
+GET /app?token=vgECVAAAABBldTRwcm8ubG9yaW90LmlvIQClcpR-zDIdaLyVI1Lplw== HTTP/1.1
+
+Upgrade: websocket
+
+Host: eu4pro.loriot.io
+
+Origin: http://eu4pro.loriot.io
+
+Sec-WebSocket-Key: ZVBtXxJdBQ0H9E/CKRaLHQ==
+
+Sec-WebSocket-Version: 13
+
+Connection: upgrade
+
+
+
+
+-----------------------
+--- response header ---
+HTTP/1.1 101 Switching Protocols
+Server: nginx
+Date: Tue, 23 Mar 2021 17:41:02 GMT
+Connection: upgrade
+Upgrade: websocket
+Sec-WebSocket-Accept: S0PzxUx/M/FZA7EOYADSuwgl3p8=
+-----------------------
+opened the websocket
+bis hier alles ok 5
+
+
+
+{'cmd': 'txd', 'EUI': '10CE45FFFE003F9E', 'seqdn': 22723, 'seqq': 22723, 'ts': 1616521262819, 'gweui': 'AC1F09FFFF00AB88', 'freq': 869525000, 'sf': 12, 'toa': 1319, 'msgType': 'User DL', 'time': 1616521262819, 'ackRequested': True}
+bis hier alles ok 5
+
+
+
+keine reaktion da message ist: 
+{'cmd': 'txd', 'EUI': '10CE45FFFE003F9E', 'seqdn': 22723, 'seqq': 22723, 'ts': 1616521262819, 'gweui': 'AC1F09FFFF00AB88', 'freq': 869525000, 'sf': 12, 'toa': 1319, 'msgType': 'User DL', 'time': 1616521262819, 'ackRequested': True}
+
+
+
+
+
+
+
+
+
+
+
+bis hier alles ok 5
+
+
+
+{'cmd': 'txd', 'EUI': '10CE45FFFE003F9E', 'seqdn': 22724, 'seqq': 22724, 'ts': 1616521281093, 'gweui': 'AC1F09FFFF00AB88', 'freq': 869525000, 'sf': 12, 'toa': 1319, 'msgType': 'User DL', 'time': 1616521281093, 'ackRequested': True}
+bis hier alles ok 5
+
+
+
+keine reaktion da message ist: 
+{'cmd': 'txd', 'EUI': '10CE45FFFE003F9E', 'seqdn': 22724, 'seqq': 22724, 'ts': 1616521281093, 'gweui': 'AC1F09FFFF00AB88', 'freq': 869525000, 'sf': 12, 'toa': 1319, 'msgType': 'User DL', 'time': 1616521281093, 'ackRequested': True}
+
+
+
+
+
+
+
+
+
+
+
+bis hier alles ok 5
+
+
+
+{'cmd': 'txd', 'EUI': '10CE45FFFE003F9E', 'seqdn': 22725, 'seqq': 22725, 'ts': 1616521282818, 'gweui': 'AC1F09FFFF00AB88', 'freq': 869525000, 'sf': 12, 'toa': 1319, 'msgType': 'User DL', 'time': 1616521282818, 'ackRequested': True}
+bis hier alles ok 5
+
+
+
+keine reaktion da message ist: 
+{'cmd': 'txd', 'EUI': '10CE45FFFE003F9E', 'seqdn': 22725, 'seqq': 22725, 'ts': 1616521282818, 'gweui': 'AC1F09FFFF00AB88', 'freq': 869525000, 'sf': 12, 'toa': 1319, 'msgType': 'User DL', 'time': 1616521282818, 'ackRequested': True}
+
+
+
+
+
+
+
+
+
+
+
+bis hier alles ok 5
+
+
+
+{'cmd': 'rx', 'seqno': 373058, 'EUI': '10CE45FFFE005844', 'ts': 1616521294366, 'fcnt': 1121, 'port': 15, 'freq': 867900000, 'rssi': -69, 'snr': 9, 'toa': 51, 'dr': 'SF7 BW125 4/5', 'ack': False, 'bat': 254, 'offline': False, 'data': '040e38'}
+bis hier alles ok 5
+
+
+
+hexarray ist: 
+040e38
+bytearray(b'\x04\x0e8')
+error from callback <function on_message at 0x0000021E434E00D8>: unpack requires a buffer of 12 bytes
+  File "C:\Users\nicol\Desktop\python\dashDevices\dash_devices\env\lib\site-packages\websocket\_app.py", line 346, in _callback
+    callback(self, *args)
+  File "C:\Users\nicol\Desktop\python\realtimePlotPrototype\example1a.py", line 244, in on_message
+    message, keyList = encondeFunction(message)
+  File "C:\Users\nicol\Desktop\python\realtimePlotPrototype\example1a.py", line 120, in encondeFunction
+    [c['distance'],c['battery'],c['voltage']] = struct.unpack('3f', b)
+bis hier alles ok 5
+
+
+error from callback <function on_message at 0x0000021E434E00D8>: unpack requires a buffer of 12 bytes
+
+{'cmd': 'gw', 'seqno': 373058, 'EUI': '10CE45FFFE005844', 'ts': 1616521294366, 'fcnt': 1121, 'port': 15, 'freq': 867900000, 'toa': 51, 'dr': 'SF7 BW125 4/5', 'ack': False, 'gws': [{'rssi': -69, 'snr': 9, 'ts': 1616521294366, 'time': '2021-03-23T17:41:34.359156Z', 'gweui': '9C65F9FFFF386780', 'ant': 0, 'lat': 46.818188, 'lon': 8.227511999999999}], 'bat': 254, 'data': '040e38'}
+bis hier alles ok 5
+
+
+
+hexarray ist: 
+040e38
+bytearray(b'\x04\x0e8')
+  File "C:\Users\nicol\Desktop\python\dashDevices\dash_devices\env\lib\site-packages\websocket\_app.py", line 346, in _callback
+    callback(self, *args)
+  File "C:\Users\nicol\Desktop\python\realtimePlotPrototype\example1a.py", line 244, in on_message
+    message, keyList = encondeFunction(message)
+  File "C:\Users\nicol\Desktop\python\realtimePlotPrototype\example1a.py", line 120, in encondeFunction
+    [c['distance'],c['battery'],c['voltage']] = struct.unpack('3f', b)
+bis hier alles ok 5
+
+
+
+{'cmd': 'rx', 'seqno': 373059, 'EUI': '10CE45FFFE005843', 'ts': 1616521299785, 'fcnt': 960, 'port': 15, 'freq': 868100000, 'rssi': -73, 'snr': 10, 'toa': 61, 'dr': 'SF7 BW125 4/5', 'ack': False, 'bat': 254, 'offline': False, 'data': '01010316017d5009420a10'}
+bis hier alles ok 5
+
+
+
+hexarray ist: 
+01010316017d5009420a10
+bytearray(b'\x01\x01\x03\x16\x01}P\tB\n\x10')
+error from callback <function on_message at 0x0000021E434E00D8>: unpack requires a buffer of 12 bytes
+  File "C:\Users\nicol\Desktop\python\dashDevices\dash_devices\env\lib\site-packages\websocket\_app.py", line 346, in _callback
+    callback(self, *args)
+  File "C:\Users\nicol\Desktop\python\realtimePlotPrototype\example1a.py", line 244, in on_message
+    message, keyList = encondeFunction(message)
+  File "C:\Users\nicol\Desktop\python\realtimePlotPrototype\example1a.py", line 120, in encondeFunction
+    [c['distance'],c['battery'],c['voltage']] = struct.unpack('3f', b)
+bis hier alles ok 5
+
+
+
+{'cmd': 'gw', 'seqno': 373059, 'EUI': '10CE45FFFE005843', 'ts': 1616521299785, 'fcnt': 960, 'port': 15, 'freq': 868100000, 'toa': 61, 'dr': 'SF7 BW125 4/5', 'ack': False, 'gws': [{'rssi': -51, 'snr': 8.5, 'ts': 1616521299785, 'time': '2021-03-23T17:41:39.776887Z', 'gweui': 'AC1F09FFFF00AB88', 'ant': 0, 'lat': 46.8076885, 'lon': 7.100528}, {'rssi': -73, 'snr': 10, 'ts': 1616521299785, 'time': '2021-03-23T17:41:39.777407Z', 'gweui': '9C65F9FFFF386789', 'ant': 0, 'lat': 47.3772429, 'lon': 8.531449499999999}], 'bat': 254, 'data': '01010316017d5009420a10'}
+bis hier alles ok 5
+
+
+
+hexarray ist: 
+01010316017d5009420a10
+bytearray(b'\x01\x01\x03\x16\x01}P\tB\n\x10')
+error from callback <function on_message at 0x0000021E434E00D8>: unpack requires a buffer of 12 bytes
+  File "C:\Users\nicol\Desktop\python\dashDevices\dash_devices\env\lib\site-packages\websocket\_app.py", line 346, in _callback
+    callback(self, *args)
+  File "C:\Users\nicol\Desktop\python\realtimePlotPrototype\example1a.py", line 244, in on_message
+    message, keyList = encondeFunction(message)
+  File "C:\Users\nicol\Desktop\python\realtimePlotPrototype\example1a.py", line 120, in encondeFunction
+    [c['distance'],c['battery'],c['voltage']] = struct.unpack('3f', b)
+bis hier alles ok 5
+
+
+
+{'cmd': 'rx', 'seqno': 373060, 'EUI': '10CE45FFFE005848', 'ts': 1616521301744, 'fcnt': 5247, 'port': 15, 'freq': 868100000, 'rssi': -51, 'snr': 10.5, 'toa': 61, 'dr': 'SF7 BW125 4/5', 'ack': False, 'bat': 254, 'offline': False, 'data': '0101034f017d4709380a5b'}
+bis hier alles ok 5
+
+
+
+hexarray ist: 
+0101034f017d4709380a5b
+bytearray(b'\x01\x01\x03O\x01}G\t8\n[')
+error from callback <function on_message at 0x0000021E434E00D8>: unpack requires a buffer of 12 bytes
+  File "C:\Users\nicol\Desktop\python\dashDevices\dash_devices\env\lib\site-packages\websocket\_app.py", line 346, in _callback
+    callback(self, *args)
+  File "C:\Users\nicol\Desktop\python\realtimePlotPrototype\example1a.py", line 244, in on_message
+    message, keyList = encondeFunction(message)
+  File "C:\Users\nicol\Desktop\python\realtimePlotPrototype\example1a.py", line 120, in encondeFunction
+    [c['distance'],c['battery'],c['voltage']] = struct.unpack('3f', b)
+bis hier alles ok 5
+
+
+
+{'cmd': 'txd', 'EUI': '10CE45FFFE003FA3', 'seqdn': 36059, 'seqq': 36059, 'ts': 1616521301817, 'gweui': 'AC1F09FFFF01485B', 'freq': 869525000, 'sf': 12, 'toa': 1319, 'msgType': 'User DL', 'time': 1616521301817, 'ackRequested': True}
+bis hier alles ok 5
+
+
+
+keine reaktion da message ist: 
+{'cmd': 'txd', 'EUI': '10CE45FFFE003FA3', 'seqdn': 36059, 'seqq': 36059, 'ts': 1616521301817, 'gweui': 'AC1F09FFFF01485B', 'freq': 869525000, 'sf': 12, 'toa': 1319, 'msgType': 'User DL', 'time': 1616521301817, 'ackRequested': True}
+
+
+
+
+
+
+
+
+
+
+
+bis hier alles ok 5
+
+
+
+{'cmd': 'gw', 'seqno': 373060, 'EUI': '10CE45FFFE005848', 'ts': 1616521301744, 'fcnt': 5247, 'port': 15, 'freq': 868100000, 'toa': 61, 'dr': 'SF7 BW125 4/5', 'ack': False, 'gws': [{'rssi': -33, 'snr': 6, 'ts': 1616521301754, 'time': '2021-03-23T17:41:41.745830Z', 'gweui': 'AC1F09FFFF00AB88', 'ant': 0, 'lat': 46.8076885, 'lon': 7.100528}, {'rssi': -51, 'snr': 10.5, 'ts': 1616521301744, 'time': '2021-03-23T17:41:41.737404Z', 'gweui': '9C65F9FFFF386789', 'ant': 0, 'lat': 47.3772429, 'lon': 8.531449499999999}], 'bat': 254, 'data': '0101034f017d4709380a5b'}
+bis hier alles ok 5
+
+
+
+hexarray ist: 
+0101034f017d4709380a5b
+bytearray(b'\x01\x01\x03O\x01}G\t8\n[')
+error from callback <function on_message at 0x0000021E434E00D8>: unpack requires a buffer of 12 bytes
+  File "C:\Users\nicol\Desktop\python\dashDevices\dash_devices\env\lib\site-packages\websocket\_app.py", line 346, in _callback
+    callback(self, *args)
+  File "C:\Users\nicol\Desktop\python\realtimePlotPrototype\example1a.py", line 244, in on_message
+    message, keyList = encondeFunction(message)
+  File "C:\Users\nicol\Desktop\python\realtimePlotPrototype\example1a.py", line 120, in encondeFunction
+    [c['distance'],c['battery'],c['voltage']] = struct.unpack('3f', b)
+bis hier alles ok 5
+
+
+
+{'cmd': 'txd', 'EUI': '10CE45FFFE003F9E', 'seqdn': 22726, 'seqq': 22726, 'ts': 1616521302820, 'gweui': 'AC1F09FFFF00AB88', 'freq': 869525000, 'sf': 12, 'toa': 1319, 'msgType': 'User DL', 'time': 1616521302820, 'ackRequested': True}
+bis hier alles ok 5
+
+
+
+keine reaktion da message ist: 
+{'cmd': 'txd', 'EUI': '10CE45FFFE003F9E', 'seqdn': 22726, 'seqq': 22726, 'ts': 1616521302820, 'gweui': 'AC1F09FFFF00AB88', 'freq': 869525000, 'sf': 12, 'toa': 1319, 'msgType': 'User DL', 'time': 1616521302820, 'ackRequested': True}
+
+
+
+
+
+
+
+
+
+
+
+bis hier alles ok 5
+
+
+
+{'cmd': 'rx', 'seqno': 373061, 'EUI': '10CE45FFFE005844', 'ts': 1616521305685, 'fcnt': 1122, 'port': 15, 'freq': 868100000, 'rssi': -74, 'snr': 10.5, 'toa': 61, 'dr': 'SF7 BW125 4/5', 'ack': False, 'bat': 254, 'offline': False, 'data': '010101ff017d2607380a71'}
+bis hier alles ok 5
+
+
+
+hexarray ist: 
+010101ff017d2607380a71
+bytearray(b'\x01\x01\x01\xff\x01}&\x078\nq')
+error from callback <function on_message at 0x0000021E434E00D8>: unpack requires a buffer of 12 bytes
+  File "C:\Users\nicol\Desktop\python\dashDevices\dash_devices\env\lib\site-packages\websocket\_app.py", line 346, in _callback
+    callback(self, *args)
+  File "C:\Users\nicol\Desktop\python\realtimePlotPrototype\example1a.py", line 244, in on_message
+    message, keyList = encondeFunction(message)
+  File "C:\Users\nicol\Desktop\python\realtimePlotPrototype\example1a.py", line 120, in encondeFunction
+    [c['distance'],c['battery'],c['voltage']] = struct.unpack('3f', b)
+bis hier alles ok 5
+
+
+
+{'cmd': 'gw', 'seqno': 373061, 'EUI': '10CE45FFFE005844', 'ts': 1616521305685, 'fcnt': 1122, 'port': 15, 'freq': 868100000, 'toa': 61, 'dr': 'SF7 BW125 4/5', 'ack': False, 'gws': [{'rssi': -74, 'snr': 10.5, 'ts': 1616521305685, 'time': '2021-03-23T17:41:45.679172Z', 'gweui': '9C65F9FFFF386780', 'ant': 0, 'lat': 46.818188, 'lon': 8.227511999999999}], 'bat': 254, 'data': '010101ff017d2607380a71'}
+bis hier alles ok 5
+
+
+
+hexarray ist: 
+010101ff017d2607380a71
+bytearray(b'\x01\x01\x01\xff\x01}&\x078\nq')
+error from callback <function on_message at 0x0000021E434E00D8>: unpack requires a buffer of 12 bytes
+  File "C:\Users\nicol\Desktop\python\dashDevices\dash_devices\env\lib\site-packages\websocket\_app.py", line 346, in _callback
+    callback(self, *args)
+  File "C:\Users\nicol\Desktop\python\realtimePlotPrototype\example1a.py", line 244, in on_message
+    message, keyList = encondeFunction(message)
+  File "C:\Users\nicol\Desktop\python\realtimePlotPrototype\example1a.py", line 120, in encondeFunction
+    [c['distance'],c['battery'],c['voltage']] = struct.unpack('3f', b)

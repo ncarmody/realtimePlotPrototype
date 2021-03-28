@@ -82,11 +82,11 @@ colors = {
 #         # for b in toBeDecoded:
 #             # print(b)
 #         i = 0
-#         dataDict = {'distance':0.0, 'temperature': 0.0,'humidity': 0.0, 'time': "", 'year': None, 'month': None, 'day': None, 'date': None}
-#         # dataDict = {'distance':0.0, 'temperature': 0.0,'humidity': 0.0, 'time': ""}
+#         dataDict = {'VOC':0.0, 'temperature': 0.0,'humidity': 0.0, 'time': "", 'year': None, 'month': None, 'day': None, 'date': None}
+#         # dataDict = {'VOC':0.0, 'temperature': 0.0,'humidity': 0.0, 'time': ""}
 #         print(dataDict)
 #         print('bis hier alles ok 1\n\n\n')
-#         dataDict['distance'] = (self.rshift((toBeDecoded[i]<<16),0) + self.rshift((toBeDecoded[i+1]<<8),0) + toBeDecoded[i+2])/100
+#         dataDict['VOC'] = (self.rshift((toBeDecoded[i]<<16),0) + self.rshift((toBeDecoded[i+1]<<8),0) + toBeDecoded[i+2])/100
 		
 #         print('bis hier alles ok 2\n\n\n')
 #         # print(dd)
@@ -118,17 +118,27 @@ def encondeFunction(hexArray):
 	print(hexArray)
 	b = bytearray.fromhex(hexArray)
 	print(b)
-	# [c['distance'],c['battery'],c['voltage']] = struct.unpack('3f', b)
-	[c['distance'],c['battery'],c['voltage'], c['new']] = struct.unpack('4f', b)
-	print("c ist : "+str(c))
-	# c = json.loads(c)
-	# c['date_time'] = pd.to_datetime(c['datetime'].apply(lambda x: x.strftime('%x, %X')), infer_datetime_format=True)
+	data = b
+	c["Mode"] = data[1]
+	c["CO2"] = (data[2] << 8) + data[3] # in ppm
+	c["Pressure"] = (data[4] << 16) + (data[5] << 8) + data[6] # in Pa
+	c["Temperature"] = int((data[7] << 8) + data[8])/100 # in °C
+	c["Humidity"] = int((data[9] << 8) + data[10])/100 # in %
+	c["VOC"] = int((data[11]<<8)+data[12]) # as index
+
+	# [c['VOC'],c['Pressure'],c['CO2']] = struct.unpack('3f', b)
+
+	# [c['VOC'],c['Pressure'],c['CO2'], c['new']] = struct.unpack('4f', b)
+	# print("c ist : "+str(c))
+	# # c = json.loads(c)
+	# # c['date_time'] = pd.to_datetime(c['datetime'].apply(lambda x: x.strftime('%x, %X')), infer_datetime_format=True)
 	c['time'] = pd.to_datetime(datetime.now().strftime('%x, %X'), infer_datetime_format=True)
 
-	# c['time'] = pd.to_datetime(datetime.now(), infer_datetime_format=True).min
-	c['year'] = pd.to_datetime(datetime.now(), infer_datetime_format=True).year
-	c['month'] = pd.to_datetime(datetime.now(), infer_datetime_format=True).month
-	c['day'] = pd.to_datetime(datetime.now(), infer_datetime_format=True).day
+	# # c['time'] = pd.to_datetime(datetime.now(), infer_datetime_format=True).min
+	# c['year'] = pd.to_datetime(datetime.now(), infer_datetime_format=True).year
+	# c['month'] = pd.to_datetime(datetime.now(), infer_datetime_format=True).month
+	# c['day'] = pd.to_datetime(datetime.now(), infer_datetime_format=True).day
+
 
 	return [c, list(c.keys())]
 
@@ -142,45 +152,53 @@ websocket.enableTrace(True)
 # def startSetup():
 
 df = pd.read_csv('dataRecordings.csv')
-df.plot()
-# print(df)
+pp(df.time)
+# 'time': '2021-03-26T10:24:19.493171Z'
 # f, (a1, a2, a3) = plt.subplots(3, figsize=(14,round(18*0.8)))
-# a1 = df.set_index('time')[['distance']].plot(title='Distance',ax= a1, xlabel='time', grid=True, ylabel='Distance')
+# a1 = df.set_index('time')[['VOC']].plot(title='VOC',ax= a1, xlabel='time', grid=True, ylabel='VOC')
 # a2 = df.set_index('time')[['humidity']].plot(title='Temperature & Humidity' , ax= a2, xlabel='time', grid=True, ylabel='Humidity')
-# a3 = df.set_index('time')[['temperature']].plot(ax= a3, xlabel='time', grid=True, ylabel='Temperature')
-fig = make_subplots(rows=3, cols=1)
-# go.Figure(data = go.Scatter(x=df.index, y=df.loc[:, 3]), layout = go.Layout(title='wasup_bitch', yaxis_title='hueregeil', xaxis_title = 'waslosssjooo'))
-# go.Figure(data = go.Scatter(x=df.time, y=df.phaseTmCorr), layout = go.Layout(title='wasup_bitch', yaxis_title='hueregeil', xaxis_title = 'waslosssjooo'))
-df['time'] = pd.to_datetime(df['time'], infer_datetime_format=True)
-df['year'] = pd.to_datetime(df['year'], infer_datetime_format=True)
-df['month'] = pd.to_datetime(df['month'], infer_datetime_format=True)
-df['day'] = pd.to_datetime(df['day'], infer_datetime_format=True)
-# pp(df.time)
+# a3 = df.set_index('time')[['Pressure']].plot(ax= a3, xlabel='time', grid=True, ylabel='Temperature')
+# print('bis hier alles ok 11\n\n\n')
+# # traces =go.Scatter(x=df['time']  y = df['VOC'], name='FirstPlot',layout=dict(xaxis=dict(title='Measured VOC vs. time' )), yaxis = dict(title='VOC 1/[mm]'))
+
+
+# f.tight_layout()
+# print('bis hier alles ok 12\n\n\n')
+# fig = plotly_plot_data(f)	
 try:
+
+	fig = make_subplots(rows=3, cols=1)
+	# go.Figure(data = go.Scatter(x=df.index, y=df.loc[:, 3]), layout = go.Layout(title='wasup_bitch', yaxis_title='hueregeil', xaxis_title = 'waslosssjooo'))
+	# go.Figure(data = go.Scatter(x=df.time, y=df.phaseTmCorr), layout = go.Layout(title='wasup_bitch', yaxis_title='hueregeil', xaxis_title = 'waslosssjooo'))
+	df['time'] = pd.to_datetime(df['time'], infer_datetime_format=True)
+	# df['year'] = pd.to_datetime(df['year'], infer_datetime_format=True)
+	# df['month'] = pd.to_datetime(df['month'], infer_datetime_format=True)
+	# df['day'] = pd.to_datetime(df['day'], infer_datetime_format=True)
+	# # pp(df.time)
 
 	print("das ist df.head")
 	print(df.head(2))
 	print("das ist df.tail")
 
-	# traces =go.Figure(data = go.Scatter(x=df.index,  y = df.distance, name='distance'),layout=go.Layout(title='distance vs. time' , yaxis_title ='distance 1/[mm]'))
-	traces =go.Scatter(x=df.time.dt.strftime('%X %x %Z'),  y = df.distance, name='distance')
+	# traces =go.Figure(data = go.Scatter(x=df.index,  y = df.VOC, name='VOC'),layout=go.Layout(title='VOC vs. time' , yaxis_title ='VOC 1/[mm]'))
+	traces =go.Scatter(x=df.time.dt.strftime('%X %x %Z'),  y = df.VOC, name='VOC',mode="lines")
 	fig.add_trace(traces, row=1, col=1)
-	# traces =go.Scatter(x=df.time.dt.strftime('%X %x %Z'),  y = df.voltage, name='humidity')
+	# traces =go.Scatter(x=df.time.dt.strftime('%X %x %Z'),  y = df.CO2, name='humidity')
 	# fig.add_trace(traces, row=2, col=1)
-	# traces =go.Scatter(x=df.time.dt.strftime('%X %x %Z'),  y = df.battery, name='temperature')
+	# traces =go.Scatter(x=df.time.dt.strftime('%X %x %Z'),  y = df.Pressure, name='temperature')
 	# fig.add_trace(traces, row=4, col=1)
-	traces =go.Scatter(x=df.time.dt.strftime('%X %x %Z'),  y = df.voltage, name='voltage')
+	traces =go.Scatter(x=df.time.dt.strftime('%X %x %Z'),  y = df.CO2, name='CO2',mode="lines")
 	fig.add_trace(traces, row=2, col=1)
-	traces =go.Scatter(x=df.time.dt.strftime('%X %x %Z'),  y = df.battery, name='battery')
+	traces =go.Scatter(x=df.time.dt.strftime('%X %x %Z'),  y = df.Pressure, name='Pressure',mode="lines")
 	fig.add_trace(traces, row=3, col=1)
-	# fig['layout']['xaxis']['title']='distance 1/[mm]'
+	# fig['layout']['xaxis']['title']='VOC 1/[mm]'
 	# fig['layout']['xaxis2']['title']='humidity [pct]'
 	fig['layout']['xaxis3']['title']='time'
-	fig['layout']['yaxis']['title']='distance 1/[mm]'
+	fig['layout']['yaxis']['title']='VOC 1/[mm]'
 	# fig['layout']['yaxis2']['title']='humidity [pct]'
-	fig['layout']['yaxis2']['title']='voltage 1/[V]'
+	fig['layout']['yaxis2']['title']='CO2 1/[V]'
 	# fig['layout']['yaxis3']['title']='temperature 1/[°C]'
-	fig['layout']['yaxis3']['title']='battery [pct]'
+	fig['layout']['yaxis3']['title']='Pressure [pct]'
 
 
 	fig['layout']['title']='Prototype Measurements'
@@ -192,37 +210,37 @@ try:
 	print([df['time'].min(),df['time'].max()])
 	fig['layout']['xaxis3']['range']=[df['time'].min(),df['time'].max()]
 
-	diff = (np.max(df['battery'])-np.max(df['battery']))*windowMarg
-	fig['layout']['yaxis3']['range']=[np.min(df['battery'])-diff,np.max(df['battery'])+diff]
+	diff = (np.max(df['Pressure'])-np.max(df['Pressure']))*windowMarg
+	fig['layout']['yaxis3']['range']=[np.min(df['Pressure'])-diff,np.max(df['Pressure'])+diff]
 
 	# diff = (np.max(df['temperature'])-np.max(df['temperature']))*windowMarg
 	# fig['layout']['yaxis3']['range']=[np.min(df['temperature'])-diff,np.max(df['temperature'])+diff]
 	
-	diff = (np.max(df['voltage'])-np.max(df['voltage']))*windowMarg
-	fig['layout']['yaxis2']['range']=[np.min(df['voltage'])-diff,np.max(df['voltage'])+diff]
+	diff = (np.max(df['CO2'])-np.max(df['CO2']))*windowMarg
+	fig['layout']['yaxis2']['range']=[np.min(df['CO2'])-diff,np.max(df['CO2'])+diff]
 
 	# diff = (np.max(df['humidity'])-np.max(df['humidity']))*windowMarg
 	# fig['layout']['yaxis2']['range']=[np.min(df['humidity'])-diff,np.max(df['humidity'])+diff]
 	
-	diff = (np.max(df['distance'])-np.max(df['distance']))*windowMarg
-	fig['layout']['yaxis']['range']=[np.min(df['distance'])-diff,np.max(df['distance'])+diff]
+	diff = (np.max(df['VOC'])-np.max(df['VOC']))*windowMarg
+	fig['layout']['yaxis']['range']=[np.min(df['VOC'])-diff,np.max(df['VOC'])+diff]
 	
-	#fig.update_xaxes(type = 'date')
+	# fig.update_xaxes(type = 'date')
 	
-	# fig.add_trace(go.Scatter(y=df.distance,x=df.index,, mode="lines"), row=1, col=1)
-	# fig.add_trace(go.Bar(y=df.battery), row=2, col=1)
+	# fig.add_trace(go.Scatter(y=df.VOC,x=df.index, mode="lines"), row=1, col=1)
+	# fig.add_trace(go.Bar(y=df.Pressure), row=2, col=1)
 
 
 	# f.tight_layout()
-	# figure = plotly_plot_data(f)
+	# fig = plotly_plot_data(f)
 	# figure.update_xaxes(type = 'date')
 	# fig.update_layout(xaxis= {'autorange': True }, yaxis= {'autorange': True})
 	# fig.update_yaxes(range=)
 
 	dcc.Graph(id='temp_graph', figure=fig)
 	print(df.tail(2))
-	if df.shape[0]>500:
-		df = df.tail(500)
+	if df.shape[0]>50000:
+		df = df.tail(50000)
 	df.to_csv('dataRecordings.csv', index=False)
 
 except Exception as e:
@@ -238,11 +256,11 @@ def on_message(ws, message):
 	# message = json.loads(message.decode("utf-8"))
 	message = json.loads(message)
 	
-	print('bis hier alles ok 5\n\n\n')
-	print(message)
-	print('bis hier alles ok 5\n\n\n')
+	# print('bis hier alles ok 5\n\n\n')
+	# print(message)
+	# print('bis hier alles ok 5\n\n\n')
 
-	if 'data' in message.keys(): 
+	if 'data' in message.keys() and '10CE45FFFE0078B9' in message['EUI']: 
 		message = message['data']
 		# [message, keyList] = rr.PayloadDecoder(message['data'])
 		# [message, keyList] = encondeFunction(message)
@@ -255,10 +273,10 @@ def on_message(ws, message):
 			print(df)
 			df = df.append(pd.DataFrame(message, columns=keyList, index=[0]), ignore_index=True )
 			df['time'] = pd.to_datetime(df['time'], infer_datetime_format=True)
-			df['year'] = pd.to_datetime(df['year'], infer_datetime_format=True)
-			df['month'] = pd.to_datetime(df['month'], infer_datetime_format=True)
-			df['day'] = pd.to_datetime(df['day'], infer_datetime_format=True)
-			print('bis hier alles ok 8\n\n\n')
+			# df['year'] = pd.to_datetime(df['year'], infer_datetime_format=True)
+			# df['month'] = pd.to_datetime(df['month'], infer_datetime_format=True)
+			# df['day'] = pd.to_datetime(df['day'], infer_datetime_format=True)
+			# print('bis hier alles ok 8\n\n\n')
 			
 		except:
 			df = pd.DataFrame(message, columns=keyList, index = [0])
@@ -271,36 +289,36 @@ def on_message(ws, message):
 			# print('bis hier alles ok 10\n\n\n')
 			# f, (a1, a2, a3) = plt.subplots(3, sharex=True, figsize=(14,round(18*0.8)))
 			# # f, (a1, a2, a3) = plt.subplots(3, sharex=True)
-			# a1 = df.set_index('time')[['distance']].plot(title='Distance',ax= a1, xlabel='time', grid=True, ylabel='Distance')
-			# a2 = df.set_index('time')[['humidity']].plot(title='Temperature & Humidity' , ax= a2, xlabel='time', grid=True, ylabel='Humidity')
-			# a3 = df.set_index('time')[['temperature']].plot(ax= a3, xlabel='time', grid=True, ylabel='Temperature')
+			# a1 = df.set_index('time')[['VOC']].plot(title='VOC',ax= a1, xlabel='time', grid=True, ylabel='VOC')
+			# a2 = df.set_index('time')[['Pressure']].plot(title='Temperature & Humidity' , ax= a2, xlabel='time', grid=True, ylabel='Humidity')
+			# a3 = df.set_index('time')[['CO2']].plot(ax= a3, xlabel='time', grid=True, ylabel='Temperature')
 			# print('bis hier alles ok 11\n\n\n')
-			# # # traces =go.Scatter(x=df['time']  y = df['distance'], name='FirstPlot',layout=dict(xaxis=dict(title='Measured distance vs. time' )), yaxis = dict(title='distance 1/[mm]'))
+			# # # traces =go.Scatter(x=df['time']  y = df['VOC'], name='FirstPlot',layout=dict(xaxis=dict(title='Measured VOC vs. time' )), yaxis = dict(title='VOC 1/[mm]'))
 
 
 			# f.tight_layout()
 			# print('bis hier alles ok 12\n\n\n')
-			# figure = plotly_plot_data(f)
+			# fig = plotly_plot_data(f)
 			fig = make_subplots(rows=3, cols=1)
 
-			traces =go.Scatter(x=df.time.dt.strftime('%X %x %Z'),  y = df.distance, name='distance')
+			traces =go.Scatter(x=df.time.dt.strftime('%X %x %Z'),  y = df.VOC, name='VOC',mode="lines")
 			fig.add_trace(traces, row=1, col=1)
-			# traces =go.Scatter(x=df.time,  y = df.voltage, name='humidity')
+			# traces =go.Scatter(x=df.time,  y = df.CO2, name='humidity')
 			# fig.add_trace(traces, row=2, col=1)
-			traces =go.Scatter(x=df.time.dt.strftime('%X %x %Z'),  y = df.voltage, name='voltage')
+			traces =go.Scatter(x=df.time.dt.strftime('%X %x %Z'),  y = df.CO2, name='CO2',mode="lines")
 			fig.add_trace(traces, row=2, col=1)
-			traces =go.Scatter(x=df.time.dt.strftime('%X %x %Z'),  y = df.battery, name='battery')
+			traces =go.Scatter(x=df.time.dt.strftime('%X %x %Z'),  y = df.Pressure, name='Pressure',mode="lines")
 			fig.add_trace(traces, row=3, col=1)
-			# traces =go.Scatter(x=df.time,  y = df.battery, name='battery')
+			# traces =go.Scatter(x=df.time,  y = df.Pressure, name='Pressure')
 			# fig.add_trace(traces, row=4, col=1)
-			# fig['layout']['xaxis']['title']='distance 1/[mm]'
+			# fig['layout']['xaxis']['title']='VOC 1/[mm]'
 			# fig['layout']['xaxis2']['title']='humidity [pct]'
 			fig['layout']['xaxis3']['title']='time'
-			fig['layout']['yaxis']['title']='distance 1/[mm]'
+			fig['layout']['yaxis']['title']='VOC 1/[Index]'
 			# fig['layout']['yaxis2']['title']='humidity [pct]'
-			fig['layout']['yaxis2']['title']='voltage 1/[V]'
+			fig['layout']['yaxis2']['title']='CO2 1/[ppm]'
 			# fig['layout']['yaxis3']['title']='temperature 1/[°C]'
-			fig['layout']['yaxis3']['title']='battery [pct]'
+			fig['layout']['yaxis3']['title']='Pressure 1/[bar]'
 
 
 			fig['layout']['title']='Prototype Measurements'
@@ -312,25 +330,25 @@ def on_message(ws, message):
 			print([df['time'].min(),df['time'].max()])
 			fig['layout']['xaxis3']['range']=[df['time'].min(),df['time'].max()]
 
-			diff = (np.max(df['battery'])-np.max(df['battery']))*windowMarg
-			fig['layout']['yaxis3']['range']=[np.min(df['battery'])-diff,np.max(df['battery'])+diff]
 
 			# diff = (np.max(df['temperature'])-np.max(df['temperature']))*windowMarg
 			# fig['layout']['yaxis3']['range']=[np.min(df['temperature'])-diff,np.max(df['temperature'])+diff]
 			
-			diff = (np.max(df['voltage'])-np.max(df['voltage']))*windowMarg
-			fig['layout']['yaxis2']['range']=[np.min(df['voltage'])-diff,np.max(df['voltage'])+diff]
+			diff = (np.max(df['CO2'])-np.max(df['CO2']))*windowMarg
+			fig['layout']['yaxis2']['range']=[np.min(df['CO2'])-diff,np.max(df['CO2'])+diff]
 
 			# diff = (np.max(df['humidity'])-np.max(df['humidity']))*windowMarg
 			# fig['layout']['yaxis2']['range']=[np.min(df['humidity'])-diff,np.max(df['humidity'])+diff]
 			
-			diff = (np.max(df['distance'])-np.max(df['distance']))*windowMarg
-			fig['layout']['yaxis']['range']=[np.min(df['distance'])-diff,np.max(df['distance'])+diff]
+			diff = (np.max(df['VOC'])-np.max(df['VOC']))*windowMarg
+			fig['layout']['yaxis']['range']=[np.min(df['VOC'])-diff,np.max(df['VOC'])+diff]
 			
-			#fig.update_xaxes(type = 'date')
+			diff = (np.max(df['Pressure'])-np.max(df['Pressure']))*windowMarg
+			fig['layout']['yaxis3']['range']=[np.min(df['Pressure'])-diff,np.max(df['Pressure'])+diff]
+			# fig.update_xaxes(type = 'date')
 			
-			# fig.add_trace(go.Scatter(y=df.distance,x=df.index,, mode="lines"), row=1, col=1)
-			# fig.add_trace(go.Bar(y=df.battery), row=2, col=1)
+			# fig.add_trace(go.Scatter(y=df.VOC,x=df.index,, mode="lines"), row=1, col=1)
+			# fig.add_trace(go.Bar(y=df.Pressure), row=2, col=1)
 
 
 			# f.tight_layout()
@@ -361,8 +379,8 @@ def on_message(ws, message):
 		except Exception as e:
 			print('hier nicht ok weil: e')
 			print(e)
-	print('keine reaktion da message ist: ')
-	print(message)
+	# print('keine reaktion da message ist: ')
+	# print(message)
 	print('\n'*10)
 
 
@@ -446,6 +464,8 @@ def func(value):
 	return value
 
 # ws = websocket.WebSocketApp("wss://eu1.loriot.io/app?token=vnoi7QAAAA1ldTEubG9yaW90Lmlvq0PCtX4ipfqgsIUngoB5DA=",
+# vgECVAAAABBldTRwcm8ubG9yaW90LmlvIQClcpR-zDIdaLyVI1Lplw==
+# ws = websocket.WebSocketApp("wss://eu4pro.loriot.io/app?token=vgECVAAAABBldTRwcm8ubG9yaW90LmlvIQClcpR-zDIdaLyVI1Lplw==",
 ws = websocket.WebSocketApp("wss://eu4pro.loriot.io/app?token=vgECVAAAABBldTRwcm8ubG9yaW90LmlvIQClcpR-zDIdaLyVI1Lplw==",
 							 
 				  on_message = on_message,
