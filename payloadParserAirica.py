@@ -3,6 +3,15 @@ from datetime import timedelta
 # from ..PayloadParserBase import PayloadParserBase
 # from stuff import *
 
+s = bytearray(10)   # a million zeroed bytes
+        # slice cuts off the first byte
+s[1] = 5
+s[4] = 255                 # set the second element in s
+
+print(s)
+import pdb; pdb.set_trace()  # breakpoint e49f8c90 //
+
+
 # class PayloadParser(PayloadParserBase):
 class PayloadParser():
     """

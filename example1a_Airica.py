@@ -119,12 +119,14 @@ def encondeFunction(hexArray):
 	b = bytearray.fromhex(hexArray)
 	print(b)
 	data = b
+	print([data, len(data)])
 	c["Mode"] = data[1]
 	c["CO2"] = (data[2] << 8) + data[3] # in ppm
 	c["Pressure"] = (data[4] << 16) + (data[5] << 8) + data[6] # in Pa
 	c["Temperature"] = int((data[7] << 8) + data[8])/100 # in °C
 	c["Humidity"] = int((data[9] << 8) + data[10])/100 # in %
-	c["VOC"] = int((data[11]<<8)+data[12]) # as index
+	c["acc"] = int((data[11] << 3))
+	c["VOC"] = int((data[12]<<8)+data[13]) # as index 
 
 	# [c['VOC'],c['Pressure'],c['CO2']] = struct.unpack('3f', b)
 
